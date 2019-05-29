@@ -17,14 +17,14 @@ class Room:
     output += textwrap.fill(self.description, 70, initial_indent='    ') + "\n"
     return output
 
-  def show_exits(self):
-    exits = ""
+  def get_exits(self):
+    exits = tuple()
     if self.n_to is not None:
-      exits += "n "
+      exits += ("n",)
     if self.s_to is not None:
-      exits += "s "
+      exits += ("s",)
     if self.w_to is not None:
-      exits += "w "
+      exits += ("w",)
     if self.e_to is not None:
-      exits += "e "
+      exits += ("e",)
     return exits
