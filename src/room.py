@@ -17,9 +17,14 @@ class Room:
     output += textwrap.fill(self.description, 70, initial_indent='    ') + "\n"
     return output
 
-
-test = Room("test", "Just another test room with a bunch of descriptive words and stuff. I wonder what else we can add here, I'd like to make it pretty long. I guess this is good enough.")
-print(test)
-
-test.n_to = Room("another test", "Here we have another test room, but this one doesn't have as much detail to it.")
-print(test.n_to)
+  def show_exits(self):
+    exits = ""
+    if self.n_to is not None:
+      exits += "n "
+    if self.s_to is not None:
+      exits += "s "
+    if self.w_to is not None:
+      exits += "w "
+    if self.e_to is not None:
+      exits += "e "
+    return exits
