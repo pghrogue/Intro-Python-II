@@ -51,25 +51,79 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+def quit_game():
+    '''Exits the game gracefully, printing a goodbye message.'''
+    print("Goodbye!")
+    quit()
+
+
+def move(player, dir):
+    '''Move the player in the correct direction.
+
+    Args:
+        player (obj): The player object
+        dir (str): Direction to move
+    '''
+
+    if dir == "n":
+        player.move(player.location.n_to)
+    elif dir == "s":
+        player.move(player.location.s_to)
+    elif dir == "e":
+        player.move(player.location.e_to)
+    elif dir == "w":
+        player.move(player.location.w_to)
+    else:
+        exit("Error, bad direction.")
+    look(player)
+
+
+def look(player):
+    '''Prints the room description and information to the screen.
+
+    Args:
+        player (obj): The player object
+    '''
+
+    print(player.location)
+    exits = player.location.get_exits()
+    print("[Obvious exits: ", end=" ")
+    for x in exits: print(x, end =" ")
+    print("]")
+
 
 def main():
+    '''Entry point for the game and command loop.'''
+    
     name = input("Brave adventurer! What is your name? ")
     player = Player(name, room['outside'])
 
     print(f"Welcome to your adventure, {player.name}!\n")
     commands = ("l", "q")
 
-    print(player.location)
-    commands += player.location.get_exits()
-    for x in commands: print(x)
+    look(player)
 
-    
-    # # commands = ("look", "l", "quit", "q",)
+    while True:
+        cmd = input("What would you do? ")
+        exits = player.location.get_exits()
 
-    # while True:
-    #     print(player.location)
+        # Command loop.
+        if cmd == "look" or cmd == "l":
+            look(player)
+        elif cmd == "quit" or cmd == "q":
+            quit_game()
+        elif cmd in exits:
+            move(player, cmd)
+        else:
+            print("You can't do that.")
+        
 
-    #     cmd = input("> ")
+        # if cmd is "look" or cmd is "l":
+        #     print(player.location)
+        # elif cmd is "quit" or cmd is "q":
+        #     print("Goodbye!")
+        #     exit
+        # exit
 
 
 if __name__ == '__main__':
