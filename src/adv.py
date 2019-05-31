@@ -64,19 +64,29 @@ def look(player):
     print("]")
 
 
+def get(item):
+    '''Checks for item in room, moves it from room to player if valid.'''
+    # First check for the items in the room
+
+    # Remove item from room if valid entry
+
+    # Add item to player if valid entry
+
+    # Print message to player
+    print("You (don't really) get " + item)
+
 def main():
     '''Entry point for the game and command loop.'''
     
     name = input("Brave adventurer! What is your name? ")
-    player = Player(name, room['outside'])
+    player = Player(name.capitalize(), room['outside'])
 
     print(f"Welcome to your adventure, {player.name}!\n\n")
-    commands = ("l", "q")
-
+    
     look(player)
 
     while True:
-        cmd = input("What would you do? ")
+        cmd = input("What would you like to do? ").strip()
         exits = player.location.get_exits()
 
         # Command loop.
@@ -86,6 +96,13 @@ def main():
             quit_game()
         elif cmd in exits:
             move(player, cmd)
+        elif " " in cmd.strip():
+            # Handle multiple word commands
+            words = cmd.split()
+            if words[0] == "g" or words[0] == "get":
+                get(words[1])
+            else:
+                print("Do what?")
         else:
             print("You can't do that.")
 

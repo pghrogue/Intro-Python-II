@@ -3,12 +3,12 @@
 
 class Item:
 
-  def __init__(self, name, desc):
-    self.name = name
-    self.desc = desc
+    def __init__(self, name, desc):
+        self.name = name
+        self.desc = desc
 
-  def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
 
-  def description(self):
-    return self.desc
+    def description(self):
+        return self.desc

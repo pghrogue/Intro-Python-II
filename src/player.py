@@ -3,12 +3,12 @@
 
 class Player:
 
-  def __init__(self, name, location):
-    self.name = name
-    self.location = location
+    def __init__(self, name, location):
+        self.name = name
+        self.location = location
 
-  def move(self, location):
-    self.location = location
+    def move(self, location):
+        self.location = location
 
-  def __repr__(self):
-    out = self.name + " " + self.location.name
+    def __repr__(self):
+        return self.name + " " + self.location.name
