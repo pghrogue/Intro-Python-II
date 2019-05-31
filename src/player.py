@@ -9,3 +9,6 @@ class Player:
 
   def move(self, location):
     self.location = location
+
+  def __repr__(self):
+    out = self.name + " " + self.location.name

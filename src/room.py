@@ -4,9 +4,10 @@ import textwrap
 
 class Room:
 
-  def __init__(self, name, description):
+  def __init__(self, name, description, items=[]):
     self.name = name
     self.description = description
+    self.items = items
     self.n_to = None
     self.s_to = None
     self.w_to = None
@@ -14,7 +15,9 @@ class Room:
 
   def __str__(self):
     output = f'"{self.name}"\n'
-    output += textwrap.fill(self.description, 70, initial_indent='    ') + "\n"
+    output += textwrap.fill(self.description, 70, initial_indent='    ') + "\n\n"
+    for i in self.items:
+      output += textwrap.fill(i.description(), 70, initial_indent='* ') + "\n"
     return output
 
   def get_exits(self):
