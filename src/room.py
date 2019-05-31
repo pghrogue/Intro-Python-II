@@ -31,3 +31,10 @@ class Room:
         if self.e_to is not None:
             exits += ("e",)
         return exits
+
+    def item_in_room(self, item_name):
+        for i in self.items:
+            if item_name in i.name:
+                return i
+        return None
+

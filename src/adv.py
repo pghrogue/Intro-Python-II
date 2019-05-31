@@ -1,3 +1,4 @@
+import logging
 from room import Room
 from player import Player
 from item import Item
@@ -64,16 +65,55 @@ def look(player):
     print("]")
 
 
-def get(item):
+def get(player, item):
     '''Checks for item in room, moves it from room to player if valid.'''
     # First check for the items in the room
+    room_item = player.location.item_in_room(item)
 
-    # Remove item from room if valid entry
+    if room_item is not None:
+        # Remove item from room if valid entry
+        player.location.items.remove(room_item)
 
-    # Add item to player if valid entry
+        # Add item to player if valid entry
+        player.inventory.append(room_item)
 
-    # Print message to player
-    print("You (don't really) get " + item)
+        # Print message to player
+        print("You get " + room_item.name)
+    else:
+        # Item is not in the room
+        print("That is not here.")
+
+
+def drop(player, item):
+    '''Checks for item in player inventory, moves it from player to current room if valid.'''
+    # First check for the item in the inventory
+    player_item = player.item_in_inv(item)
+
+    if player_item is not None:
+        # Remove item from player if valid
+        player.inventory.remove(player_item)
+
+        # Add item to current room
+        player.location.items.append(player_item)
+
+        # Print message
+        print("You drop " + item)
+    else:
+        # Item is not in the inventory
+        print("You don't have that item to drop.")
+
+
+def inv(player):
+    '''Show player inventory'''
+    output = "You are carrying:\n"
+    items = player.items()
+    
+    if len(items) > 0:
+        output += items
+    else:
+        output += "Nothing.\n"
+    print(output)
+
 
 def main():
     '''Entry point for the game and command loop.'''
@@ -94,13 +134,17 @@ def main():
             look(player)
         elif cmd == "quit" or cmd == "q":
             quit_game()
+        elif cmd == "inventory" or cmd == "inv" or cmd == "i":
+            inv(player)
         elif cmd in exits:
             move(player, cmd)
         elif " " in cmd.strip():
             # Handle multiple word commands
             words = cmd.split()
             if words[0] == "g" or words[0] == "get":
-                get(words[1])
+                get(player, words[1])
+            elif words[0] == "d" or words[0] == "drop":
+                drop(player, words[1])
             else:
                 print("Do what?")
         else:
